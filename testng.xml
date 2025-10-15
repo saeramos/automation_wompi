@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Wompi API Test Suite" parallel="false">
+    <test name="Wompi Payment Tests">
+        <classes>
+            <class name="com.wompi.automation.runners.CucumberTestRunner"/>
+        </classes>
+    </test>
+</suite>
