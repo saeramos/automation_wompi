@@ -1,5 +1,6 @@
 package com.wompi.automation.builders;
 
+import com.wompi.automation.models.NequiPaymentRequest;
 import com.wompi.automation.models.PSEPaymentRequest;
 import java.util.Properties;
 import java.io.InputStream;
@@ -153,5 +154,53 @@ public class TestDataBuilder {
      */
     public static String getTestDataProperty(String key) {
         return testDataProperties.getProperty(key);
+    }
+
+    /**
+     * Builds a valid Nequi payment request
+     * @return NequiPaymentRequest with valid test data
+     */
+    public static NequiPaymentRequest buildValidNequiPaymentRequest() {
+        return NequiPaymentRequest.builder()
+                .amountInCents(Integer.parseInt(testDataProperties.getProperty("test.amount.normal")))
+                .currency("COP")
+                .customerEmail(testDataProperties.getProperty("valid.nequi.person.email"))
+                .reference(generateReference("NEQUI_VALID"))
+                .paymentSourceId(1)
+                .paymentMethod(NequiPaymentRequest.PaymentMethod.builder()
+                        .type("NEQUI")
+                        .phoneNumber(testDataProperties.getProperty("valid.nequi.phone.number"))
+                        .paymentDescription("Valid Nequi Payment Test")
+                        .build())
+                .customerData(NequiPaymentRequest.CustomerData.builder()
+                        .email(testDataProperties.getProperty("valid.nequi.person.email"))
+                        .fullName(testDataProperties.getProperty("valid.nequi.person.name"))
+                        .phoneNumber(testDataProperties.getProperty("valid.nequi.person.mobile"))
+                        .build())
+                .build();
+    }
+
+    /**
+     * Builds an invalid Nequi payment request with wrong phone number
+     * @return NequiPaymentRequest with invalid phone number
+     */
+    public static NequiPaymentRequest buildInvalidNequiPaymentRequest() {
+        return NequiPaymentRequest.builder()
+                .amountInCents(Integer.parseInt(testDataProperties.getProperty("test.amount.normal")))
+                .currency("COP")
+                .customerEmail(testDataProperties.getProperty("invalid.nequi.person.email"))
+                .reference(generateReference("NEQUI_INVALID"))
+                .paymentSourceId(1)
+                .paymentMethod(NequiPaymentRequest.PaymentMethod.builder()
+                        .type("NEQUI")
+                        .phoneNumber(testDataProperties.getProperty("invalid.nequi.phone.number"))
+                        .paymentDescription("Invalid Nequi Payment Test")
+                        .build())
+                .customerData(NequiPaymentRequest.CustomerData.builder()
+                        .email(testDataProperties.getProperty("invalid.nequi.person.email"))
+                        .fullName(testDataProperties.getProperty("invalid.nequi.person.name"))
+                        .phoneNumber(testDataProperties.getProperty("invalid.nequi.person.mobile"))
+                        .build())
+                .build();
     }
 }

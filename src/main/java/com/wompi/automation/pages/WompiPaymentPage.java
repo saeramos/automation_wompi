@@ -1,6 +1,7 @@
 package com.wompi.automation.pages;
 
 import com.wompi.automation.config.ConfigManager;
+import com.wompi.automation.models.NequiPaymentRequest;
 import com.wompi.automation.models.PSEPaymentRequest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -38,7 +39,20 @@ public class WompiPaymentPage {
                 .extract()
                 .response();
     }
-    
+    /**
+     * Creates a Nequi payment transaction
+     * @param paymentRequest The Nequi payment request data
+     * @return Response from the API
+     */
+    public Response createNequiPayment(NequiPaymentRequest paymentRequest) {
+        return requestSpec
+                .body(paymentRequest)
+                .when()
+                .post("/transactions")
+                .then()
+                .extract()
+                .response();
+    }
     /**
      * Gets transaction status by ID
      * @param transactionId The transaction ID

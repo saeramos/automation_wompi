@@ -53,3 +53,20 @@ Feature: Wompi Payment Integration Tests
     When I query the transaction status
     Then I should receive the current transaction status
     And the status should be "APPROVED"
+
+  @positive @nequi-payment
+  Scenario: Successful Nequi payment transaction
+    Given I have valid Nequi payment data
+    When I create a Nequi payment transaction
+    Then the transaction should be approved
+    And I should receive a transaction ID
+    And the transaction status should be "APPROVED"
+
+  @negative @invalid-nequi-data
+  Scenario: Nequi payment with invalid phone number
+    Given I have invalid Nequi payment data
+    When I create a Nequi payment transaction
+    Then the transaction should be rejected
+    And I should receive an error message
+    And the transaction status should be "DECLINED"
+
